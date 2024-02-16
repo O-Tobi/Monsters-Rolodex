@@ -1,4 +1,4 @@
-/* import { Component }  from 'react';
+import { Component }  from 'react';
 
 class Card extends Component {
     render() {
@@ -7,11 +7,11 @@ class Card extends Component {
         return (
         <div>
             {monsters.map((monster) => (
-                <h1>{monster.name}</h1>
+                <h1 key={monster.id}>{monster.name}</h1>
             ))}
         </div>
         );
     }
 };
 
-export default Card; */
+export default Card;

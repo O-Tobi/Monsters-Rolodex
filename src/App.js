@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import SearchBox from './components/search-box/search-box';
 import Card from './components/card-list/card';
+
 
 class App extends Component {
   constructor() {
@@ -15,39 +17,32 @@ class App extends Component {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
       .then((users) => this.setState({ monsters: users },
-        () => {
-          console.log(this.state);
-        }
       ));
   }
 
   onSearchChange = (event) => {
-    const searchField = event.target.value.toLowerCase();
-    this.setState({ searchField });
-  };
+    this.setState({searchField: event.target.value.toLowerCase()})
+  }
+  
 
   render() {
-    const {searchField, monsters} = this.state
-    const {onSearchChange} = this;
+      const {searchField, monsters} = this.state
+      const {onSearchChange} = this;
 
-    const filteredMonster = monsters.filter((monster) => {
+      const filteredMonster = monsters.filter((monster) => {
       return monster.name.toLowerCase().includes(searchField);
-    });
-
+       });
+    
     return (
       <div className="App">
         <h1>Monster List</h1>
-        <input
-          className='search-box'
-          type='search'
-          placeholder='Search Monsters'
-          onChange={onSearchChange}
+
+        <SearchBox 
+        className='search-box'
+        onChangeHandler ={onSearchChange} 
+        placeholder='Search Monsters'
         />
-      
-        {filteredMonster.map((monster, index) => {
-          const id = `monster_${index}`;
-          return <h1 key={id}>{monster.name}</h1>;
-        })}
+        <Card monsters={filteredMonster} />
       </div>
     );
   }
